@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "JLRoutes.h" 
 
 @interface AppDelegate ()
 
@@ -17,6 +18,32 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [JLRoutes addRoute:@"/junne/views/:viewID" handler:^BOOL(NSDictionary<NSString *,NSString *> * _Nonnull parameters) {
+        NSString *viewID = parameters[@"viewID"];
+//        UIViewController *controller = [[NSClassFromString(viewID) alloc] init];
+        UIViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:viewID];
+        [self.window.rootViewController presentViewController:controller animated:YES completion:^{
+            
+        }];
+        return YES;
+    }];
+    
+    [JLRoutes addRoute:@"/:viewID/:sayContent" handler:^BOOL(NSDictionary<NSString *,NSString *> * _Nonnull parameters) {
+        
+        NSString *viewID = parameters[@"viewID"];
+        NSString *sayContentStrng = parameters[@"sayContent"];
+        
+        UIViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:viewID];
+        [self.window.rootViewController presentViewController:controller animated:YES completion:^{
+            
+        }];
+        
+        
+        return YES;
+    }];
+    
+    
     return YES;
 }
 
@@ -40,6 +67,11 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    return [JLRoutes routeURL:url];
 }
 
 @end

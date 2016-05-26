@@ -19,6 +19,11 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+- (IBAction)jumpToOneViewController:(id)sender {
+    NSURL *viewUrl = [NSURL URLWithString:@"JLRoutesDemo://junne/views/OneViewController"];
+    [[UIApplication sharedApplication] openURL:viewUrl];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
